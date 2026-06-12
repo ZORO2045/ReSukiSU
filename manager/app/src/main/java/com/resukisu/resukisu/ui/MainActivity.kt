@@ -655,7 +655,8 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun initializeViewModels() {
-        superUserViewModel = SuperUserViewModel()
+        superUserViewModel =
+            ViewModelProvider(applicationContext as KernelSUApplication)[SuperUserViewModel::class.java]
         homeViewModel =
             ViewModelProvider(applicationContext as KernelSUApplication)[HomeViewModel::class.java]
         settingsViewModel =
