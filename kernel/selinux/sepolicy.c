@@ -167,8 +167,9 @@ static bool remove_avtab_node(struct policydb *db, struct avtab_node *node)
         prev = NULL;
         // https://github.com/torvalds/linux/commit/acdf52d97f824019888422842757013b37441dd1   <- 5.1
         // https://github.com/torvalds/linux/commit/ba39db6e0519aa8362dbda6523ceb69349a18dc3   <- 4.1
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0) || LINUX_VERSION_CODE < KERNEL_VERSION(4, 1, 0) ||                   \
-    defined(KSU_COMPAT_HAS_MODERN_POLICYDB)
+#if !defined(KSU_COMPAT_HAS_FLEX_ARRAY_AVTAB) &&                                                                      \
+    (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 1, 0) || LINUX_VERSION_CODE < KERNEL_VERSION(4, 1, 0) ||                  \
+     defined(KSU_COMPAT_HAS_MODERN_POLICYDB))
         for (n = db->te_avtab.htable[i]; n; prev = n, n = n->next) {
             if (n != node)
                 continue;
